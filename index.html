@@ -7,22 +7,32 @@
     <link rel="stylesheet" href="css/styles.css" />
     <script src="js/app.js" defer></script>
   </head>
+  
+  <!--Cabecera-->
   <body>
     <header class="site-header">
       <div class="container header-content">
-        <h1>Rick & Morty Explorer</h1>
+        <h1>Rick & Morty </h1>
       </div>
     </header>
 
     <main class="container">
+        <!--Buscador-->
+        <section class="search">
+            <label for="searchInput" >Buscar personaje</label>
+            <input id="searchInput" type="search" placeholder="Buscar por nombre..." autocomplete="on">
+        </section>
+
+        <!--Cards-->
       <section class="cards-section">
         <h2>Personajes</h2>
         <p id="statusText" class="status-text">Cargando datos...</p>
-        <div id="cardsGrid" class="cards-grid"></div>
+        <!--Insertamos las cards desde el js-->
+        <div id="cardsList" class="cards-list"></div>
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="footer">
       <div class="container">
         <small>AA2 Lenguajes de Marcas</small>
       </div>

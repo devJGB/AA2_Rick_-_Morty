@@ -1,18 +1,25 @@
+//URL de la api
 const API_BASE = "https://rickandmortyapi.com/api";
 
-const cardsGrid = document.getElementById("cardsGrid");
+// Ref. elemtos html
+const cardsList = document.getElementById("cardsList");
 const statusText = document.getElementById("statusText");
+const searchInput = document.getElementById("searchInput")
 
+
+
+// Pintamos las cards
 const renderCharacters = (list) => {
-  cardsGrid.innerHTML = "";
+  cardsList.innerHTML = ""; // limpiamos
 
   if (list.length === 0) {
     statusText.textContent = "No hay resultados.";
     return;
   }
 
+  // Cuantos peronajes hay
   statusText.textContent = `Mostrando ${list.length} personajes`;
-
+  // card por cada personaje
   list.forEach((character) => {
     const card = document.createElement("article");
     card.className = "card";
@@ -22,20 +29,32 @@ const renderCharacters = (list) => {
       <div><strong>Género:</strong> ${character.gender}</div>
       <div><strong>Estado:</strong> ${character.status}</div>
     `;
-    cardsGrid.appendChild(card);
+    cardsList.appendChild(card);
   });
 };
 
-const loadCharacters = async () => {
+// pedimos los datos a la api
+const loadCharacters = async (query = "") => {
   try {
     statusText.textContent = "Cargando datos...";
-    const response = await fetch(`${API_BASE}/character`);
+    //llamamos a la api y añadimo name para la busqueda
+    const url = new URL(`${API_BASE}/character`);
+    if (query) url.searchParams.set("name", query);
+    const response = await fetch(url);
     if (!response.ok) throw new Error();
     const data = await response.json();
+    // Si va bien pintamos en pantalla
     renderCharacters(data.results);
   } catch {
     statusText.textContent = "Error cargando datos.";
   }
 };
 
+// Buscador
+searchInput.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    loadCharacters(query);
+})
+
+// Arrancamos la pág
 loadCharacters();
