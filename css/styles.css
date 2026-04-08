@@ -1,21 +1,24 @@
+/* Reset */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* estilos generales */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: #f6f8fb;
   color: #202733;
   line-height: 1.5;
 }
-
+/* contenedor central */
 .container {
   width: min(1100px, 92%);
   margin: 0 auto;
 }
 
+/* Cabecera */
 .site-header {
   background: #0d1b2a;
   color: #fff;
@@ -28,7 +31,21 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+/* Buscador */
+.search-panel {
+  margin-bottom: 18px;
+}
 
+.search-panel input {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid #d9dfe7;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+
+/* Sección card-listado */
 .cards-section h2 {
   margin-bottom: 10px;
 }
@@ -38,11 +55,13 @@ body {
   margin-bottom: 10px;
 }
 
-.cards-grid {
+.cards-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 16px;
 }
+
+/* card individual */
 
 .card {
   background: #fff;
@@ -53,7 +72,7 @@ body {
   gap: 8px;
 }
 
-.site-footer {
+.footer {
   margin-top: 24px;
   padding: 16px 0;
   color: #6b7280;
