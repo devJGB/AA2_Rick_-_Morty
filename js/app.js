@@ -23,8 +23,9 @@ const renderCharacters = (list) => {
   list.forEach((character) => {
     const card = document.createElement("article");
     card.className = "card";
+    // El nombre del personaje lo creamos como enlace al detalle
     card.innerHTML = `
-      <h3>${character.name}</h3>
+      <h3><a href="detail.html?id=${character.id}">${character.name}</a></h3>
       <div><strong>Especie:</strong> ${character.species}</div>
       <div><strong>Género:</strong> ${character.gender}</div>
       <div><strong>Estado:</strong> ${character.status}</div>
