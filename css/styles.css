@@ -47,6 +47,69 @@ body {
   font-size: 18px;
 }
 
+/* Panel CRUD */
+.favorite-panel {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(13, 27, 42, 0.08);
+  margin-bottom: 24px;
+}
+
+.favorite-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  margin: 12px 0 16px;
+}
+
+.favorite-form input,
+.favorite-form button {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d9dfe7;
+}
+
+.favorite-form button {
+  background: #1b263b;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.favorites-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.favorite-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f9fbff;
+}
+
+.favorite-item button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background: #ffd166;
+}
+
+.btn-delete {
+  background: #ef476f;
+  color: #fff;
+}
+
+
 
 /* Sección card-listado */
 .cards-section h2 {
@@ -93,11 +156,8 @@ body {
 }
 
 /* Cabecera del detalle */
-.detail-header {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 20px;
-  align-items: center;
+.text-header {
+  margin-left: 40px;
 }
 
 .nav-links a {
@@ -105,7 +165,9 @@ body {
   text-decoration: none;
   margin-left: 12px;
   font-weight: 600;
+  margin-right: 40px;
 }
+
 
 .detail-header img {
   width: 150px;
@@ -135,4 +197,9 @@ body {
     grid-template-columns: 1fr;
     justify-items: center;
   }
+  /*  formulario */
+  .foavorite-form {
+    grid-template-columns: 1fr;
+  }
+
 }

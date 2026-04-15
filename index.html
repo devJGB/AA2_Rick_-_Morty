@@ -23,6 +23,24 @@
             <input id="searchInput" type="search" placeholder="Buscar por nombre..." autocomplete="on">
         </section>
 
+        <!-- CRUD (favoritos)-->
+         <section class="favorite-panel">
+          <h2>¡ Mis Favoritos !</h2>
+
+          <!-- Crear/estirar favoritos-->
+           <form id="favoriteForm" class="favorite-form">
+            <input id="favName" type="text" placeholder="Nombre Personaje Favorito" required />
+            <input id="favNote" type="text" placeholder="Nota"/>
+            <button type="submit">Guardar</button>
+           </form>
+
+           <!-- Lista fav-->
+            <ul id="favoritesList" class="favorites-list">
+
+            </ul>
+
+         </section>
+
         <!--Cards-->
       <section class="cards-section">
         <h2>Personajes</h2>
