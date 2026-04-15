@@ -3,6 +3,9 @@ const API_BASE = "https://rickandmortyapi.com/api";
 
 // Ref. al html
 const detailPanel = document.querySelector(".detail-panel");
+// Info extra
+const locationInfo = document.getElementById("locationInfo");
+const episodeInfo = document.getElementById("episodeInfo");
 
 // Leemos el id de url
 const params = new URLSearchParams(window.location.search);
@@ -28,6 +31,45 @@ const createDetailMarkup = (character) => `
   </div>
   `;
 
+// Cargamos info extra otros endpoints
+const loadExtraInfo = async (character) => {
+  // endpoint ubicación
+  if (character.location?.url) {
+    try {
+      const response = await fetch(character.location.url);
+      if (response.ok) {
+        const location = await response.json();
+        locationInfo.textContent = `${location.name} * ${location.type} * ${location.dimension}`;
+      } else {
+        locationInfo.textContent = "No disponible.";
+      }
+    } catch {
+      locationInfo.textContent = "No disponible.";
+    }
+  } else {
+    locationInfo.textContent = "No disponible.";
+  }
+
+  // Endpoint episodio
+  if (character.episode && character.episode.length > 0) {
+    try {
+      const response = await fetch(character.episode[0]);
+      if (response.ok) {
+        const episode = await response.json();
+        episodeInfo.textContent = `${episode.episode} * ${episode.name} * ${episode.air_date}`;
+      } else {
+        episodeInfo.textContent = "No disponible.";
+      }
+    } catch {
+      episodeInfo.textContent = "Error cargando episodio.";
+    }
+  } else {
+    episodeInfo.textContent = "No disponible.";
+  }
+};
+
+  
+
 // Carga detalle desde la api
 const loadDetail = async () => {
   if (!characterId) {
@@ -43,6 +85,9 @@ const loadDetail = async () => {
 
     const character = await response.json();
     detailPanel.innerHTML = createDetailMarkup(character);
+    
+    // Llamadas extra a otros endpoints
+    await loadExtraInfo(character);
   } catch {
     detailPanel.innerHTML = "<p class='status-text'>Error cargando detalle.</p>";
   }

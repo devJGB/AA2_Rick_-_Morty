@@ -191,6 +191,24 @@ body {
   border-radius: 10px;
 }
 
+/*  (otros endpoints) */
+.extra-detail h2 {
+  margin-bottom: 10px;
+}
+
+.extra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.extra-card {
+  background: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
 /* Responsive */
 @media (max-width: 720px) {
   .detail-header {

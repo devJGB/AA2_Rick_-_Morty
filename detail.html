@@ -11,7 +11,7 @@
 <body>
     <!--Cabecera-->
     <header class="header">
-        <div class="continer header-content">
+        <div class="container header-content">
             <h1 class="text-header">Detalle del personaje</h1>
             <nav class="nav-links">
                 <a href="index.html">Home</a>
@@ -23,8 +23,23 @@
     <main class="container">
         <!--Detalle-->
         <section class="detail-panel">
-            <p class="status-tex">Detalle pendiente de cargar ...</p>
+            <p class="status-text">Cargando detalle...</p>
         </section>
+
+        <!-- Otros endpoints-->
+         <section class="extra-panel">
+            <h2>Más Información</h2>
+            <div class="extra-grid">
+                <div class="extra-card">
+                    <h3>Última ubicación</h3>
+                    <p id="locationInfo">-</p>
+                </div>
+                <div class="extra-card">
+                    <h3>Primer episodio</h3>
+                    <p id="episodeInfo">-</p>
+                </div>
+            </div>
+         </section>
     </main>
 
     <!--Footer-->
