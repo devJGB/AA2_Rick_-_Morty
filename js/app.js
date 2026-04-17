@@ -10,6 +10,14 @@ const favNameInput = document.getElementById("favName");
 const favNoteInput = document.getElementById("favNote");
 const favoritesList = document.getElementById("favoritesList");
 
+const prevPageButton = document.getElementById('prevPage');
+const netxPageButton = document.getElementById('nextPage');
+const pageInfo = document.getElementById('pageInfo');
+
+let currentPage = 1;
+let totalPages = 1;
+let currentQuery= '';
+
 // Guardamos el localStorage
 const FAVORITES_KEY = "aa2_favorites";
 let editingId = null;
@@ -50,6 +58,12 @@ const renderFavorites = () => {
   });
 };
 
+// Paginación
+const updatePaginationControls = () => {
+  prevPageButton.disabled = currentPage <= 1;
+  netxPageButton.disabled = currentPage >= totalPages;
+  pageInfo.textContent = `Página ${currentPage} / ${totalPages}`;
+};
 
 // Crear o editar favorito
 favoriteForm.addEventListener("submit", (e) => {
@@ -137,26 +151,68 @@ const renderCharacters = (list) => {
 };
 
 // pedimos los datos a la api
-const loadCharacters = async (query = "") => {
+// Carga personajes desde la API, con búsqueda y paginación
+const loadCharacters = async (query = "", page = 1) => {
   try {
+    // Mensaje mientras se cargan los datos
     statusText.textContent = "Cargando datos...";
-    //llamamos a la api y añadimo name para la busqueda
+
+    // Construimos la URL base y añadimos parámetros
     const url = new URL(`${API_BASE}/character`);
-    if (query) url.searchParams.set("name", query);
+    url.searchParams.set("page", page);      // página actual
+    if (query) url.searchParams.set("name", query); // filtro por nombre
+
+    // Llamada a la API
     const response = await fetch(url);
+
+    // Si la API responde 404, no hay resultados
+    if (response.status === 404) {
+      renderCharacters([]);
+      currentPage = 1;
+      totalPages = 1;
+      updatePaginationControls();
+      return;
+    }
+
+    // Si hay otro error, lanzamos excepción
     if (!response.ok) throw new Error();
+
+    // Convertimos la respuesta a JSON
     const data = await response.json();
-    // Si va bien pintamos en pantalla
+
+    // Pintamos personajes en pantalla
     renderCharacters(data.results);
+
+    // Actualizamos el estado de paginación
+    currentPage = page;
+    totalPages = data.info.pages;
+    currentQuery = query;
+
+    // Refrescamos botones y texto de paginación
+    updatePaginationControls();
   } catch {
+    // Mensaje de error si falla la API
     statusText.textContent = "Error cargando datos.";
   }
 };
 
+// Escuchamos los botone
+prevPageButton.addEventListener("click", () => {
+  if (currentPage > 1) {
+    loadCharacters(currentQuery, currentPage - 1);
+  }
+});
+
+netxPageButton.addEventListener("click", () => {
+  if (currentPage < totalPages) {
+    loadCharacters(currentQuery, currentPage + 1);
+  }
+});
+
 // Buscador
 searchInput.addEventListener("input", (e) => {
     const query = e.target.value.toLowerCase().trim();
-    loadCharacters(query);
+    loadCharacters(query, 1);
 })
 
 // Arrancamos la pág

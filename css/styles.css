@@ -35,10 +35,39 @@ body {
 
 
 /* Buscador */
-.search-panel {
+.search {
   margin-bottom: 18px;
+  display: grid;
+  gap: 8px;
 }
 
+/* Paginaciín*/
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #1b263b;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-weight: 600;
+  color: #374151;
+}
 .search-panel input {
   width: 100%;
   padding: 16px 18px;
@@ -218,6 +247,15 @@ body {
   /*  formulario */
   .foavorite-form {
     grid-template-columns: 1fr;
+  }
+
+  .favorite-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .favorite-item button {
+    width: 100%;
   }
 
 }
