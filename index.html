@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AA2 | Rick & Morty</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/app.js" defer></script>
+  </head>
+  
+  <!--Cabecera-->
+  <body>
+    <header class="header">
+      <div class="container header-content">
+        <h1>Rick & Morty </h1>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="favorites.html">Favoritos</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+        <!--Buscador-->
+        <section class="search">
+            <label for="searchInput" >Buscar personaje</label>
+            <input id="searchInput" type="search" placeholder="Buscar por nombre..." autocomplete="on">
+        </section>
+
+
+        <!--Cards-->
+      <section class="cards-section">
+        <h2>Personajes</h2>
+        <p id="statusText" class="status-text">Cargando datos...</p>
+        <div class="pagination">
+          <button id="prevPage" type="button" disabled>Anterior</button>
+          <span id="pageInfo">Página 1 / 1</span>
+          <button id="nextPage" type="button" disabled>Siguiente</button>
+        </div>
+        <!--Insertamos las cards desde el js-->
+        <div id="cardsList" class="cards-list"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <small>AA2 Lenguajes de Marcas</small>
+      </div>
+    </footer>
+  </body>
+</html>
