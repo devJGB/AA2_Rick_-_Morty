@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+.search label {
+  font-weight: 600;
+}
+
 /* estilos generales */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -39,6 +43,10 @@ body {
   margin-bottom: 18px;
   display: grid;
   gap: 8px;
+  background: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(13, 27, 42, 0.08);
 }
 
 /* Paginaciín*/
@@ -68,12 +76,12 @@ body {
   font-weight: 600;
   color: #374151;
 }
-.search-panel input {
+.search input {
   width: 100%;
-  padding: 16px 18px;
+  padding: 14px 16px;
   border: 1px solid #d9dfe7;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* Panel CRUD */
@@ -136,6 +144,27 @@ body {
 .btn-delete {
   background: #ef476f;
   color: #fff;
+}
+
+.btn-fav {
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ef476f;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-fav.is-fav,
+.btn-fav:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 
@@ -244,18 +273,14 @@ body {
     grid-template-columns: 1fr;
     justify-items: center;
   }
-  /*  formulario */
-  .foavorite-form {
+  .favorite-form {
     grid-template-columns: 1fr;
   }
-
   .favorite-item {
     grid-template-columns: 1fr;
     gap: 8px;
   }
-
   .favorite-item button {
     width: 100%;
   }
-
 }
