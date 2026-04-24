@@ -5,10 +5,6 @@ const API_BASE = "https://rickandmortyapi.com/api";
 const cardsList = document.getElementById("cardsList");
 const statusText = document.getElementById("statusText");
 const searchInput = document.getElementById("searchInput")
-const favoriteForm = document.getElementById("favoriteForm");
-const favNameInput = document.getElementById("favName");
-const favNoteInput = document.getElementById("favNote");
-const favoritesList = document.getElementById("favoritesList");
 
 const prevPageButton = document.getElementById('prevPage');
 const netxPageButton = document.getElementById('nextPage');
@@ -17,46 +13,17 @@ const pageInfo = document.getElementById('pageInfo');
 let currentPage = 1;
 let totalPages = 1;
 let currentQuery= '';
-
-// Guardamos el localStorage
 const FAVORITES_KEY = "aa2_favorites";
-let editingId = null;
 
-// leemos favoritos guardados
 const getFavorites = () => {
   const raw = localStorage.getItem(FAVORITES_KEY);
-    return raw ? JSON.parse(raw) : [];
+  return raw ? JSON.parse(raw) : [];
 };
 
-// Guardar favoritos
 const saveFavorites = (favorites) => {
   localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
 };
 
-// Pintamos favoritos
-const renderFavorites = () => {
-  const favorites = getFavorites();
-  favoritesList.innerHTML = "";
-
-  if(favorites.length == 0) {
-    favoritesList.innerHTML = "<li>No hay favoritos. Añade uno a tu lista.</li>";
-    return;
-  }
-
-  favorites.forEach((fav) => {
-    const item = document.createElement("li");
-    item.className = "favorite-item";
-    item.innerHTML = `
-    <div>
-      <strong>${fav.name}</strong>
-      ${fav.note ? `<div>${fav.note}</div>` : ""}
-    </div>
-     <button class="btn-edit" data-id="${fav.id}">Editar</button>
-      <button class="btn-delete" data-id="${fav.id}">Eliminar</button>
-      `;
-      favoritesList.appendChild(item);
-  });
-};
 
 // Paginación
 const updatePaginationControls = () => {
@@ -64,64 +31,6 @@ const updatePaginationControls = () => {
   netxPageButton.disabled = currentPage >= totalPages;
   pageInfo.textContent = `Página ${currentPage} / ${totalPages}`;
 };
-
-// Crear o editar favorito
-favoriteForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const name = favNameInput.value.trim();
-  const note = favNoteInput.value.trim();
-  if (!name) return;
-
-  const favorites = getFavorites();
-
-  if (editingId) {
-    // Editar existente
-    const index = favorites.findIndex((fav) => fav.id === editingId);
-    if (index !== -1) {
-      favorites[index] = { id: editingId, name, note };
-    }
-  } else {
-    // Crear nuevo
-    const newFavorite = {
-      id: crypto.randomUUID(),
-      name,
-      note,
-    };
-    favorites.push(newFavorite);
-  }
-
-  saveFavorites(favorites);
-  renderFavorites();
-  favoriteForm.reset();
-  editingId = null;
-});
-
-// Botones editar / eliminar
-favoritesList.addEventListener("click", (e) => {
-  const button = e.target;
-  const id = button.getAttribute("data-id");
-  if (!id) return;
-
-  const favorites = getFavorites();
-
-  if (button.classList.contains("btn-edit")) {
-    const favorite = favorites.find((fav) => fav.id === id);
-    if (!favorite) return;
-    favNameInput.value = favorite.name;
-    favNoteInput.value = favorite.note;
-    editingId = favorite.id;
-  }
-
-  if (button.classList.contains("btn-delete")) {
-    const updated = favorites.filter((fav) => fav.id !== id);
-    saveFavorites(updated);
-    renderFavorites();
-  }
-});
-
-// llamamos a renderfavorites, arrancamos el crud
-renderFavorites();
 
 
 // Pintamos las cards
@@ -136,15 +45,20 @@ const renderCharacters = (list) => {
   // Cuantos peronajes hay
   statusText.textContent = `Mostrando ${list.length} personajes`;
   // card por cada personaje
+  const favorites = getFavorites();
   list.forEach((character) => {
     const card = document.createElement("article");
     card.className = "card";
+    const isFav = favorites.some((fav) => fav.characterId === String(character.id));
     // El nombre del personaje lo creamos como enlace al detalle
     card.innerHTML = `
       <h3><a href="detail.html?id=${character.id}">${character.name}</a></h3>
       <div><strong>Especie:</strong> ${character.species}</div>
       <div><strong>Género:</strong> ${character.gender}</div>
       <div><strong>Estado:</strong> ${character.status}</div>
+      <button class="btn-fav${isFav ? " is-fav" : ""}" data-id="${character.id}" data-name="${character.name}" aria-label="Añadir a favoritos" ${isFav ? "disabled" : ""}>
+        ♥
+      </button>
     `;
     cardsList.appendChild(card);
   });
@@ -215,5 +129,35 @@ searchInput.addEventListener("input", (e) => {
     loadCharacters(query, 1);
 })
 
-// Arrancamos la pág
-loadCharacters();
+// Arrancamos la pág (si viene búsqueda en URL, la aplicamos)
+const params = new URLSearchParams(window.location.search);
+const initialSearch = params.get("search");
+if (initialSearch) {
+  searchInput.value = initialSearch;
+  loadCharacters(initialSearch, 1);
+} else {
+  loadCharacters();
+}
+// Añadir a favoritos desde el listado
+cardsList.addEventListener("click", (e) => {
+  const button = e.target;
+  if (!button.classList.contains("btn-fav")) return;
+
+  const characterId = button.getAttribute("data-id");
+  const name = button.getAttribute("data-name");
+
+  const favorites = getFavorites();
+  const exists = favorites.some((fav) => fav.characterId === characterId);
+  if (exists) return;
+
+  favorites.push({
+    id: crypto.randomUUID(),
+    name,
+    note: "",
+    characterId,
+  });
+
+  saveFavorites(favorites);
+  button.classList.add("is-fav");
+  button.disabled = true;
+});

@@ -13,6 +13,10 @@
     <header class="header">
       <div class="container header-content">
         <h1>Rick & Morty </h1>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="favorites.html">Favoritos</a>
+        </nav>
       </div>
     </header>
 
@@ -23,23 +27,6 @@
             <input id="searchInput" type="search" placeholder="Buscar por nombre..." autocomplete="on">
         </section>
 
-        <!-- CRUD (favoritos)-->
-         <section class="favorite-panel">
-          <h2>¡ Mis Favoritos !</h2>
-
-          <!-- Crear/estirar favoritos-->
-           <form id="favoriteForm" class="favorite-form">
-            <input id="favName" type="text" placeholder="Nombre Personaje Favorito" required />
-            <input id="favNote" type="text" placeholder="Nota"/>
-            <button type="submit">Guardar</button>
-           </form>
-
-           <!-- Lista fav-->
-            <ul id="favoritesList" class="favorites-list">
-
-            </ul>
-
-         </section>
 
         <!--Cards-->
       <section class="cards-section">

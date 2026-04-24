@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Favoritos | Rick & Morty</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/favorites.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-content">
+        <h1>Mis Favoritos</h1>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="favorites.html">Favoritos</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="favorite-panel">
+        <h2>¡ Mis Favoritos !</h2>
+        <p id="favoritesStatus" class="status-text"></p>
+
+        <form id="favoriteForm" class="favorite-form">
+          <input
+            id="favName"
+            type="text"
+            placeholder="Nombre Personaje Favorito"
+            required
+          />
+          <input id="favNote" type="text" placeholder="Nota" />
+          <button type="submit">Guardar</button>
+        </form>
+
+        <ul id="favoritesList" class="favorites-list"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <small>AA2 Lenguajes de Marcas</small>
+      </div>
+    </footer>
+  </body>
+</html>
